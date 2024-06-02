@@ -1,7 +1,6 @@
 {
   "extends": "solhint:recommended",
   "rules": {
-    "custom-errors": false,
     "func-visibility": ["warn", { "ignoreConstructors": true }]
   }
 }

@@ -8,6 +8,7 @@
     "clean": "hardhat clean",
     "test": "hardhat test",
     "check": "npx hardhat check",
+    "coverage": "npx hardhat coverage",
     "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
   },
   "devDependencies": {
