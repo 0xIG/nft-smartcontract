@@ -6,7 +6,7 @@
  * @title Errors
  * @dev Interface for error handling
  */
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.26;
 
 interface Errors {
     /**

@@ -1,17 +1,21 @@
 {
-  "plugins": ["prettier-plugin-solidity"],
-  "printWidth": 80,
-  "overrides": [
-    {
-      "files": "*.sol",
-      "options": {
-        "parser": "solidity-parse",
-        "printWidth": 120,
-        "tabWidth": 4,
-        "useTabs": false,
-        "singleQuote": false,
-        "bracketSpacing": false
-      }
-    }
-  ]
+    "plugins": ["prettier-plugin-solidity"],
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "overrides": [
+        {
+            "files": "*.sol",
+            "options": {
+                "parser": "solidity-parse",
+                "printWidth": 120,
+                "tabWidth": 4,
+                "useTabs": false,
+                "singleQuote": false,
+                "bracketSpacing": false
+            }
+        }
+    ]
 }

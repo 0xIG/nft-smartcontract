@@ -6,6 +6,9 @@ node_modules
 /cache
 /artifacts
 
+# Contracts exposed
+/contracts-exposed
+
 # TypeChain files
 /typechain
 /typechain-types

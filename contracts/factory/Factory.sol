@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Compatible with OpenZeppelin Contracts ^5.0.0
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.26;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {ERC721Contract} from "../ERC721/ERC721Contract.sol";
+import {ERC721Token} from "../token/ERC721/ERC721Token.sol";
 import {UtilBase} from "../util/UtilBase.sol";
 
 enum ContractType {
@@ -45,7 +45,7 @@ contract Factory is Ownable, UtilBase {
         if (msg.value < deployPrice) {
             revert NotEnoughFunds(msg.sender, deployPrice, msg.value);
         }
-        ERC721Contract newContract = new ERC721Contract(msg.sender, _name, _symbol, _metadataUri, _maxSupply, _price);
+        ERC721Token newContract = new ERC721Token(msg.sender, _name, _symbol, _metadataUri, _maxSupply, _price);
         deployedContracts[msg.sender].push(
             DeployedContract({
                 owner: msg.sender,
