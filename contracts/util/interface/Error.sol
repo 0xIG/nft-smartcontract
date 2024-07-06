@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 // Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.26;
 
 /**
  * @author BigDaddyArrow
- * @title Errors
+ * @title Error
  * @dev Interface for error handling
  */
-pragma solidity ^0.8.26;
-
-interface Errors {
+interface Error {
     /**
      * @dev Error thrown when a null address is encountered
      */
@@ -30,10 +29,11 @@ interface Errors {
     error NullTransferAmount(address _from, address _to);
 
     /**
-     * @dev Error thrown when a funds transfer fails
+     * @dev Error thrown  when a funds transfer fails
      * @param _from The sender address
      * @param _to The recipient address
      * @param _value The transfer amount
+     * @param _currency Currency name
      */
-    error FundsTransferFailed(address _from, address _to, uint256 _value);
+    error FundsTransferFailed(address _from, address _to, uint256 _value, string _currency);
 }

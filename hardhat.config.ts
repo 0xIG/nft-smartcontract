@@ -8,6 +8,9 @@ const config: HardhatUserConfig = {
     gasReporter: {
         enabled: true,
     },
+    typechain: {
+        outDir: "types",
+    },
 };
 
 export default config;

@@ -2,7 +2,8 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.26;
 
-import {Errors} from "../util/interface/Errors.sol";
+import {Error} from "./interface/Error.sol";
+import {Event} from "./interface/Event.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
@@ -10,9 +11,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * @title UtilBase
  * @dev Contract for basic utility
  */
-abstract contract UtilBase is Errors, Ownable {
-    event FundsTransfered(address indexed _from, address indexed _to, uint256 _amount, string indexed _currency);
-
+abstract contract UtilBase is Error, Event, Ownable {
     /**
      * @dev Checks if the given address is zero address
      * @param _account The address to check
@@ -35,7 +34,7 @@ abstract contract UtilBase is Errors, Ownable {
         }
         (bool success, ) = _to.call{value: amount}("");
         if (!success) {
-            revert FundsTransferFailed(address(this), _to, amount);
+            revert FundsTransferFailed(address(this), _to, amount, "ETH");
         }
         emit FundsTransfered(address(this), _to, amount, "ETH");
     }
