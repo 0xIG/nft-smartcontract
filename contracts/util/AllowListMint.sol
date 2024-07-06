@@ -12,7 +12,15 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 abstract contract AllowListMint is Ownable {
     bool public allowListMintActive;
 
-    error NotInAllowList(address account);
+    /**
+     * @dev Error thrown when account is not in the allow list
+     * @param _account The account address
+     */
+    error NotInAllowList(address _account);
+
+    /**
+     * @dev Error thrown when allow list minting is not active
+     */
     error AllowListNotActive();
 
     mapping(address => bool) public allowList;
