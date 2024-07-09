@@ -57,7 +57,7 @@ abstract contract AllowListMint is Ownable {
      * @dev Adds multiple addresses to the allowlist.
      * @param _accounts The addresses to add to the allow list.
      */
-    function addToAllowlist(address[] calldata _accounts) external virtual onlyOwner {
+    function addToAllowList(address[] calldata _accounts) external virtual onlyOwner {
         for (uint256 i = 0; i < _accounts.length; i++) {
             allowList[_accounts[i]] = true;
         }
