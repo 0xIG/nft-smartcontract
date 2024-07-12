@@ -10,6 +10,7 @@
         "check": "hardhat check",
         "coverage": "hardhat clean && hardhat coverage",
         "docs": "hardhat docgen",
+        "node": "hardhat node",
         "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
         "deploy:factory:sepolia": "hardhat ignition deploy ignition/modules/deployFactory.ts --network sepolia"
     },
