@@ -11,9 +11,10 @@ import {UtilBase} from "../util/UtilBase.sol";
 
 /**
  * @title ERC721Contract
+ * @author BigDaddyArrow
  * @dev An ERC721 contract with additional functionalities.
  */
-abstract contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowListMint, UtilBase {
+contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowListMint, UtilBase {
     uint256 private _nextTokenId;
     string private _baseUri;
 

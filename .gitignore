@@ -5,13 +5,14 @@ node_modules
 # Hardhat files
 /cache
 /artifacts
+/ignition/deployments
 
 # Contracts exposed
 /contracts-exposed
 
 # TypeChain files
 /typechain
-/types
+/typechain-types
 
 # solidity-coverage files
 /coverage
