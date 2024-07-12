@@ -10,7 +10,8 @@
         "check": "hardhat check",
         "coverage": "hardhat clean && hardhat coverage",
         "docs": "hardhat docgen",
-        "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'"
+        "prettier": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
+        "deploy:factory:sepolia": "hardhat ignition deploy ignition/modules/deployFactory.ts --network sepolia"
     },
     "devDependencies": {
         "@nomicfoundation/hardhat-ignition-ethers": "^0.15.5",
