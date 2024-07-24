@@ -1,28 +1,36 @@
 {
-    "plugins": ["prettier-plugin-solidity"],
-    "printWidth": 120,
-    "tabWidth": 4,
-    "useTabs": false,
-    "trailingComma": "all",
-    "arrowParens": "avoid",
-    "overrides": [
-        {
-            "files": "*.sol",
-            "options": {
-                "parser": "solidity-parse",
-                "printWidth": 120,
-                "tabWidth": 4,
-                "useTabs": false,
-                "singleQuote": false,
-                "bracketSpacing": false
-            }
-        },
-        {
-            "files": "*.yaml",
-            "options": {
-                "tabWidth": 2,
-                "useTabs": false
-            }
-        }
-    ]
+  "plugins": ["prettier-plugin-solidity"],
+  "printWidth": 120,
+  "tabWidth": 4,
+  "useTabs": false,
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": "*.sol",
+      "options": {
+        "parser": "solidity-parse",
+        "printWidth": 120,
+        "tabWidth": 4,
+        "useTabs": false,
+        "singleQuote": false,
+        "bracketSpacing": false
+      }
+    },
+    {
+      "files": ["*.yaml", "*.yml", "*.json"],
+      "options": {
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    },
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json",
+        "tabWidth": 2,
+        "useTabs": false
+      }
+    }
+  ]
 }
