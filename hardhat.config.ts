@@ -5,6 +5,7 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-solhint";
 import "hardhat-exposed";
 import "solidity-docgen";
+import "hardhat-contract-sizer";
 
 dotenvConfig();
 let { PRIVATE_KEY, INFURA_KEY, ETHERSCAN_KEY } = process.env;
@@ -34,6 +35,11 @@ const config: HardhatUserConfig = {
     docgen: {
         exclude: ["mock"],
         pages: "files",
+    },
+
+    contractSizer: {
+        strict: true,
+        runOnCompile: true,
     },
 };
 
