@@ -7,7 +7,7 @@ import {ERC721Contract} from "../ERC721/ERC721Contract.sol";
 import {UtilBase} from "../util/UtilBase.sol";
 
 /**
- * @dev Enum defining the types of contracts that can be deployed by the Factory.
+ * @notice Enum defining the types of contracts that can be deployed by the Factory.
  */
 enum ContractType {
     ERC721,
@@ -18,7 +18,7 @@ enum ContractType {
 /**
  * @title Factory
  * @author BigDaddyArrow
- * @dev This contract serves as a factory for deploying NFT contracts.
+ * @notice This contract serves as a factory for deploying NFT contracts.
  */
 
 contract Factory is Ownable, UtilBase {
@@ -45,7 +45,7 @@ contract Factory is Ownable, UtilBase {
     constructor() Ownable(msg.sender) {}
 
     /**
-     * @dev Deploys a new ERC721 contract.
+     * @notice Deploys a new ERC721 contract.
      * @param _name The name of the ERC721 contract.
      * @param _symbol The symbol of the ERC721 contract.
      * @param _metadataUri The metadata URI of the ERC721 contract.

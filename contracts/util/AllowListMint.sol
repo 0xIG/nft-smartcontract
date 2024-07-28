@@ -7,26 +7,26 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @author BigDaddyArrow
  * @title AllowListMint
- * @dev Contract for enabling allow list mint functionality
+ * @notice Contract for enabling allow list mint functionality
  */
 abstract contract AllowListMint is Ownable {
     bool public allowListMintActive;
 
     /**
-     * @dev Error thrown when account is not in the allow list
+     * @notice Error thrown when account is not in the allow list
      * @param _account The account address
      */
     error NotInAllowList(address _account);
 
     /**
-     * @dev Error thrown when allow list minting is not active
+     * @notice Error thrown when allow list minting is not active
      */
     error AllowListNotActive();
 
     mapping(address => bool) public allowList;
 
     /**
-     * @dev Modifier to check if address is in allow list
+     * @notice Modifier to check if address is in allow list
      * @param _account The address to check
      */
     modifier isInAllowList(address _account) {
@@ -37,7 +37,7 @@ abstract contract AllowListMint is Ownable {
     }
 
     /**
-     * @dev Modifier to check if allow list mint is active
+     * @notice Modifier to check if allow list mint is active
      */
     modifier whenAllowListMintIsActive() {
         if (!allowListMintActive) {
@@ -47,14 +47,14 @@ abstract contract AllowListMint is Ownable {
     }
 
     /**
-     * @dev Toggles the allow list minting status
+     * @notice Toggles the allow list minting status
      */
     function toggleAllowListMint() external virtual onlyOwner {
         allowListMintActive = !allowListMintActive;
     }
 
     /**
-     * @dev Adds multiple addresses to the allowlist.
+     * @notice Adds multiple addresses to the allowlist.
      * @param _accounts The addresses to add to the allow list.
      */
     function addToAllowList(address[] calldata _accounts) external virtual onlyOwner {
@@ -64,7 +64,7 @@ abstract contract AllowListMint is Ownable {
     }
 
     /**
-     * @dev Removes multiple addresses from the allowlist.
+     * @notice Removes multiple addresses from the allowlist.
      * @param _accounts The addresses to remove from the allow list.
      */
     function removeFromAllowList(address[] calldata _accounts) external virtual onlyOwner {

@@ -7,18 +7,18 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @author BigDaddyArrow
  * @title PublicMint
- * @dev Contract for enabling public minting functionality
+ * @notice Contract for enabling public minting functionality
  */
 abstract contract PublicMint is Ownable {
     bool public publicMintActive;
 
     /**
-     * @dev Error thrown when public minting is not active
+     * @notice Error thrown when public minting is not active
      */
     error PublicMintNotActive();
 
     /**
-     * @dev Modifier to check if public minting is active
+     * @notice Modifier to check if public minting is active
      */
     modifier whenPublicMintIsActive() {
         if (!publicMintActive) {
@@ -28,7 +28,7 @@ abstract contract PublicMint is Ownable {
     }
 
     /**
-     * @dev Function to toggle public minting status
+     * @notice Function to toggle public minting status
      */
     function togglePublicMint() external virtual onlyOwner {
         publicMintActive = !publicMintActive;

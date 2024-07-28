@@ -3,7 +3,6 @@ import { config as dotenvConfig } from "dotenv";
 import "@nomicfoundation/hardhat-ignition-ethers";
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-solhint";
-import "hardhat-exposed";
 import "solidity-docgen";
 import "hardhat-contract-sizer";
 
@@ -33,13 +32,14 @@ const config: HardhatUserConfig = {
         apiKey: ETHERSCAN_KEY,
     },
     docgen: {
-        exclude: ["mock"],
+        exclude: ["mock, exposed"],
         pages: "files",
     },
 
     contractSizer: {
         strict: true,
         runOnCompile: true,
+        except: ["exposed", "mock"],
     },
 };
 

@@ -12,7 +12,7 @@ import {UtilBase} from "../util/UtilBase.sol";
 /**
  * @title ERC721Contract
  * @author BigDaddyArrow
- * @dev An ERC721 contract with additional functionalities.
+ * @notice An ERC721 contract with additional functionalities.
  */
 contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowListMint, UtilBase {
     uint256 private _nextTokenId;
@@ -31,7 +31,6 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
         uint256 _maxSupply,
         uint256 _price
     ) ERC721(_name, _symbol) Ownable(_initialOwner) {
-        _checkNullAddress((_initialOwner));
         maxSupply = _maxSupply;
         price = _price;
         _baseUri = _metadataUri;
@@ -42,7 +41,7 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
     fallback() external payable {}
 
     /**
-     * @dev Mints a token with next available token id. Requres
+     * @notice Mints a token with next available token id. Requires
      * to pass value as price for token
      */
     function publicMint() external payable whenPublicMintIsActive {
@@ -51,7 +50,7 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
     }
 
     /**
-     * @dev Mints a token to the caller using the allowlist minting functionality. In this implementation accounts in allow list can only mint one free token. They can mint free more if added to allow list again
+     * @notice Mints a token to the caller using the allowlist minting functionality. In this implementation accounts in allow list can only mint one free token. They can mint free more if added to allow list again
      */
     function allowListMint() external payable isInAllowList(msg.sender) whenAllowListMintIsActive {
         _internalMint();

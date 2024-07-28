@@ -1,13 +1,13 @@
-import hre from "hardhat";
+import { ethers } from "hardhat";
 import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { OWNABLE_UNAUTHORIZED_ACCOUNT, PUBLIC_MINT_NOT_ACTIVE } from "../Errors";
+import { MockPublicMint } from "../../typechain-types";
 
 async function fixture() {
-    const [owner, ...accounts] = await hre.ethers.getSigners();
-    const publicMint = await hre.ethers.deployContract("$PublicMint", [owner]);
-    const publicMintMock = await hre.ethers.deployContract("MockPublicMint");
-    return { owner, accounts, publicMint, publicMintMock };
+    const [owner, ...accounts] = await ethers.getSigners();
+    const publicMint: MockPublicMint = await ethers.deployContract("MockPublicMint");
+    return { owner, accounts, publicMint };
 }
 
 describe("PublicMint", function () {
@@ -46,17 +46,17 @@ describe("PublicMint", function () {
     });
     describe("whenPublicMintIsActive", function () {
         it(`Public mint is not active: Revert ${PUBLIC_MINT_NOT_ACTIVE}`, async function () {
-            let { publicMintMock } = await loadFixture(fixture);
-            await expect(publicMintMock.whenPublicMintIsActiveTest()).to.be.revertedWithCustomError(
-                publicMintMock,
+            let { publicMint } = await loadFixture(fixture);
+            await expect(publicMint.whenPublicMintIsActiveTest()).to.be.revertedWithCustomError(
+                publicMint,
                 PUBLIC_MINT_NOT_ACTIVE,
             );
         });
         it("Should pass successfully", async function () {
-            let { publicMintMock } = await loadFixture(fixture);
-            await publicMintMock.togglePublicMint();
-            expect(await publicMintMock.publicMintActive()).to.be.true;
-            await publicMintMock.whenPublicMintIsActiveTest();
+            let { publicMint } = await loadFixture(fixture);
+            await publicMint.togglePublicMint();
+            expect(await publicMint.publicMintActive()).to.be.true;
+            await publicMint.whenPublicMintIsActiveTest();
         });
     });
 });

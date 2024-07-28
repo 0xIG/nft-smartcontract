@@ -1,13 +1,13 @@
-import hre from "hardhat";
+import { ethers } from "hardhat";
 import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { ALLOW_LIST_MINT_NOT_ACTIVE, NOT_IN_ALLOW_LIST, OWNABLE_UNAUTHORIZED_ACCOUNT } from "../Errors";
+import { MockAllowListMint } from "../../typechain-types";
 
 async function fixture() {
-    const [owner, ...accounts] = await hre.ethers.getSigners();
-    const allowListMint = await hre.ethers.deployContract("$AllowListMint", [owner]);
-    const allowListMintMock = await hre.ethers.deployContract("MockAllowListMint");
-    return { owner, accounts, allowListMint, allowListMintMock };
+    const [owner, ...accounts] = await ethers.getSigners();
+    const allowListMint: MockAllowListMint = await ethers.deployContract("MockAllowListMint");
+    return { owner, accounts, allowListMint };
 }
 
 describe("AllowListMint", function () {
@@ -103,34 +103,34 @@ describe("AllowListMint", function () {
     });
     describe("whenAllowListIsActive", function () {
         it(`Allow list mint is not active: Revert ${ALLOW_LIST_MINT_NOT_ACTIVE}`, async function () {
-            let { allowListMintMock } = await loadFixture(fixture);
-            await expect(allowListMintMock.whenAllowListMintIsActiveTest()).to.be.revertedWithCustomError(
-                allowListMintMock,
+            let { allowListMint } = await loadFixture(fixture);
+            await expect(allowListMint.whenAllowListMintIsActiveTest()).to.be.revertedWithCustomError(
+                allowListMint,
                 ALLOW_LIST_MINT_NOT_ACTIVE,
             );
         });
         it("Should pass successfully", async function () {
-            let { allowListMintMock } = await loadFixture(fixture);
-            await allowListMintMock.toggleAllowListMint();
-            expect(await allowListMintMock.allowListMintActive()).to.be.true;
-            await allowListMintMock.whenAllowListMintIsActiveTest();
+            let { allowListMint } = await loadFixture(fixture);
+            await allowListMint.toggleAllowListMint();
+            expect(await allowListMint.allowListMintActive()).to.be.true;
+            await allowListMint.whenAllowListMintIsActiveTest();
         });
     });
     describe("isInAllowList", function () {
         it(`Account is not in allow list: Should revert ${NOT_IN_ALLOW_LIST}`, async function () {
-            let { allowListMintMock, accounts } = await loadFixture(fixture);
+            let { allowListMint, accounts } = await loadFixture(fixture);
             let wallet = accounts[0];
-            expect(await allowListMintMock.allowList(wallet)).to.be.false;
-            await expect(allowListMintMock.isInAllowListTest(wallet))
-                .to.be.revertedWithCustomError(allowListMintMock, NOT_IN_ALLOW_LIST)
+            expect(await allowListMint.allowList(wallet)).to.be.false;
+            await expect(allowListMint.isInAllowListTest(wallet))
+                .to.be.revertedWithCustomError(allowListMint, NOT_IN_ALLOW_LIST)
                 .withArgs(wallet);
         });
         it("Should pass successfully", async function () {
-            let { allowListMintMock, accounts } = await loadFixture(fixture);
+            let { allowListMint, accounts } = await loadFixture(fixture);
             let wallet = accounts[0];
-            await allowListMintMock.addToAllowList([wallet]);
-            expect(await allowListMintMock.allowList(wallet)).to.be.true;
-            await allowListMintMock.isInAllowListTest(wallet);
+            await allowListMint.addToAllowList([wallet]);
+            expect(await allowListMint.allowList(wallet)).to.be.true;
+            await allowListMint.isInAllowListTest(wallet);
         });
     });
 });

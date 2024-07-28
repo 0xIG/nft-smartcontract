@@ -9,21 +9,21 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @author BigDaddyArrow
  * @title UtilBase
- * @dev Contract for basic utility
+ * @notice Contract for basic utility
  */
 abstract contract UtilBase is Error, Event, Ownable {
     /**
-     * @dev Checks if the given address is zero address
+     * @notice Checks if the given address is zero address
      * @param _account The address to check
      */
-    function _checkNullAddress(address _account) internal view virtual {
+    function _checkNullAddress(address _account) internal pure virtual {
         if (_account == address(0)) {
             revert NullAddress();
         }
     }
 
     /**
-     * @dev Withdraws the contract balance to the specified address.
+     * @notice Withdraws the contract balance to the specified address.
      * @param _to The address to withdraw the balance to.
      */
     function withdraw(address payable _to) external virtual onlyOwner {

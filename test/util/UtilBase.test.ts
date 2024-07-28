@@ -1,13 +1,14 @@
-import hre from "hardhat";
+import { ethers } from "hardhat";
 import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { FUNDS_TRANSFER_FAILED, NULL_ADDRESS, NULL_TRANSFER_AMOUNT, OWNABLE_UNAUTHORIZED_ACCOUNT } from "../Errors";
 import { FUNDS_TRANSFERED } from "../Events";
+import { MockNoReceive, MockUtilBase } from "../../typechain-types";
 
 async function fixture() {
-    const [owner, ...accounts] = await hre.ethers.getSigners();
-    const utilBase = await hre.ethers.deployContract("$UtilBase", [owner]);
-    const mockNoReceive = await hre.ethers.deployContract("MockNoReceive");
+    const [owner, ...accounts] = await ethers.getSigners();
+    const utilBase: MockUtilBase = await ethers.deployContract("MockUtilBase");
+    const mockNoReceive: MockNoReceive = await ethers.deployContract("MockNoReceive");
     return { owner, accounts, utilBase, mockNoReceive };
 }
 
@@ -15,20 +16,20 @@ describe("UtilBase", function () {
     describe("_checkNullAddress", function () {
         it(`Address is address of zero: Should revert ${NULL_ADDRESS}`, async function () {
             let { utilBase } = await loadFixture(fixture);
-            await expect(utilBase.$_checkNullAddress(hre.ethers.ZeroAddress)).to.be.revertedWithCustomError(
+            await expect(utilBase.checkNullAddress(ethers.ZeroAddress)).to.be.revertedWithCustomError(
                 utilBase,
                 NULL_ADDRESS,
             );
         });
         it("Should pass successfuly", async function () {
             let { accounts, utilBase } = await loadFixture(fixture);
-            await utilBase.$_checkNullAddress(accounts[0]);
+            await utilBase.checkNullAddress(accounts[0]);
         });
     });
     describe("withdraw", function () {
         it(`Address is address of zero: Should revert ${NULL_ADDRESS}`, async function () {
             let { utilBase } = await loadFixture(fixture);
-            await expect(utilBase.withdraw(hre.ethers.ZeroAddress)).to.be.revertedWithCustomError(
+            await expect(utilBase.withdraw(ethers.ZeroAddress)).to.be.revertedWithCustomError(
                 utilBase,
                 `${NULL_ADDRESS}`,
             );
@@ -41,7 +42,7 @@ describe("UtilBase", function () {
         });
         it(`Fail to transfer ether: Should revert ${FUNDS_TRANSFER_FAILED}`, async function () {
             let { owner, utilBase, mockNoReceive } = await loadFixture(fixture);
-            let value = hre.ethers.parseEther("1.0");
+            let value = ethers.parseEther("1.0");
             await owner.sendTransaction({ to: utilBase, value });
             await expect(utilBase.withdraw(mockNoReceive))
                 .to.be.revertedWithCustomError(utilBase, FUNDS_TRANSFER_FAILED)
@@ -55,7 +56,7 @@ describe("UtilBase", function () {
         });
         it(`Transfer passed successfully to owner account: Should emit ${FUNDS_TRANSFERED}`, async function () {
             let { owner, utilBase } = await loadFixture(fixture);
-            let value = hre.ethers.parseEther("1.0");
+            let value = ethers.parseEther("1.0");
             await owner.sendTransaction({ to: utilBase, value });
             await expect(utilBase.withdraw(owner))
                 .to.emit(utilBase, FUNDS_TRANSFERED)
@@ -64,7 +65,7 @@ describe("UtilBase", function () {
         it(`Transfer passed successfully to not owner account: Should emit ${FUNDS_TRANSFERED}`, async function () {
             let { owner, accounts, utilBase } = await loadFixture(fixture);
             let wallet = accounts[0];
-            let value = hre.ethers.parseEther("1.0");
+            let value = ethers.parseEther("1.0");
             await owner.sendTransaction({ to: utilBase, value });
             await expect(utilBase.withdraw(wallet))
                 .to.emit(utilBase, FUNDS_TRANSFERED)
