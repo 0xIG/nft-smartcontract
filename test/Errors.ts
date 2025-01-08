@@ -14,3 +14,6 @@ export const PUBLIC_MINT_NOT_ACTIVE = "PublicMintNotActive";
 // Allow List Mint Errors
 export const ALLOW_LIST_MINT_NOT_ACTIVE = "AllowListNotActive";
 export const NOT_IN_ALLOW_LIST = "NotInAllowList";
+
+//ERC721 errors
+export const MAX_SUPPLEY_EXEEDED = "MaxSupplyExceeded";

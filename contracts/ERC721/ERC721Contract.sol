@@ -15,6 +15,10 @@ import {UtilBase} from "../util/UtilBase.sol";
  * @notice An ERC721 contract with additional functionalities.
  */
 contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowListMint, UtilBase {
+    /* 
+        State varables
+    */
+
     uint256 private _nextTokenId;
     string private _baseUri;
 
@@ -40,6 +44,10 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
 
     fallback() external payable {}
 
+    /*
+        Exertnal methods
+    */
+
     /**
      * @notice Mints a token with next available token id. Requires
      * to pass value as price for token
@@ -57,12 +65,18 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
         allowList[msg.sender] = false;
     }
 
+    /*
+        Internal methods
+    */
+
     /**
      * @dev Internal function that handles all common mint processes.
      */
     function _internalMint() internal {
         uint256 tokenId = _nextTokenId++;
-        if (tokenId > maxSupply) {
+
+        // first token has id 0
+        if (tokenId >= maxSupply) {
             revert MaxSupplyExceeded();
         }
         _safeMint(msg.sender, tokenId);
@@ -79,6 +93,10 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
             revert NotEnoughFunds(msg.sender, price, msg.value);
         }
     }
+
+    /* 
+        Override methods
+    */
 
     /**
      * @dev See {ERC721}.
