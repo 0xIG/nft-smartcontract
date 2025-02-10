@@ -21,7 +21,7 @@ enum ContractType {
  * @notice This contract serves as a factory for deploying NFT contracts.
  */
 
-contract Factory is Ownable, UtilBase {
+contract Factory is Ownable {
     struct DeployedContract {
         address owner;
         address contractAddress;
@@ -29,8 +29,6 @@ contract Factory is Ownable, UtilBase {
         string name;
         string symbol;
     }
-
-    uint256 public deployPrice;
 
     mapping(address => DeployedContract[]) public deployedContracts;
 
@@ -49,20 +47,15 @@ contract Factory is Ownable, UtilBase {
      * @param _name The name of the ERC721 contract.
      * @param _symbol The symbol of the ERC721 contract.
      * @param _metadataUri The metadata URI of the ERC721 contract.
-     * @param _maxSupply The maximum supply of the ERC721 contract.
      * @param _price The price for minting NFT.
      */
     function deployERC721(
         string memory _name,
         string memory _symbol,
         string memory _metadataUri,
-        uint256 _maxSupply,
         uint256 _price
-    ) external payable {
-        if (msg.value < deployPrice) {
-            revert NotEnoughFunds(msg.sender, deployPrice, msg.value);
-        }
-        ERC721Contract newContract = new ERC721Contract(msg.sender, _name, _symbol, _metadataUri, _maxSupply, _price);
+    ) external {
+        ERC721Contract newContract = new ERC721Contract(msg.sender, _name, _symbol, _metadataUri, _price);
         deployedContracts[msg.sender].push(
             DeployedContract({
                 owner: msg.sender,

@@ -16,13 +16,18 @@ import {UtilBase} from "../util/UtilBase.sol";
  */
 contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowListMint, UtilBase {
     /* 
-        State varables
+        Constant variables
+    */
+
+    uint256 private constant MAX_SUPPLY = 100;
+
+    /* 
+        State variables
     */
 
     uint256 private _nextTokenId;
     string private _baseUri;
 
-    uint256 public maxSupply;
     uint256 public price;
 
     error MaxSupplyExceeded();
@@ -32,10 +37,8 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
         string memory _name,
         string memory _symbol,
         string memory _metadataUri,
-        uint256 _maxSupply,
         uint256 _price
     ) ERC721(_name, _symbol) Ownable(_initialOwner) {
-        maxSupply = _maxSupply;
         price = _price;
         _baseUri = _metadataUri;
     }
@@ -60,9 +63,17 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
     /**
      * @notice Mints a token to the caller using the allowlist minting functionality. In this implementation accounts in allow list can only mint one free token. They can mint free more if added to allow list again
      */
-    function allowListMint() external payable isInAllowList(msg.sender) whenAllowListMintIsActive {
+    function allowListMint() external payable whenAllowListMintIsActive isInAllowList(msg.sender) {
         _internalMint();
         allowList[msg.sender] = false;
+    }
+
+    /*
+        View and pure methods
+    */
+
+    function maxSupply() external pure returns (uint256) {
+        return MAX_SUPPLY;
     }
 
     /*
@@ -76,7 +87,7 @@ contract ERC721Contract is ERC721, ERC721Enumerable, Ownable, PublicMint, AllowL
         uint256 tokenId = _nextTokenId++;
 
         // first token has id 0
-        if (tokenId >= maxSupply) {
+        if (tokenId >= MAX_SUPPLY) {
             revert MaxSupplyExceeded();
         }
         _safeMint(msg.sender, tokenId);
