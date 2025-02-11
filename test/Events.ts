@@ -6,3 +6,6 @@ export const OWNERSHIP_TRANSFERED = "OwnershipTransferred";
 
 /// ERC721 Events
 export const TRANSFER = "Transfer";
+
+/// Factory events
+export const CONTRACT_DEPLOYED = "ContractDeployed";

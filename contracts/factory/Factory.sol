@@ -4,16 +4,6 @@ pragma solidity ^0.8.26;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ERC721Contract} from "../ERC721/ERC721Contract.sol";
-import {UtilBase} from "../util/UtilBase.sol";
-
-/**
- * @notice Enum defining the types of contracts that can be deployed by the Factory.
- */
-enum ContractType {
-    ERC721,
-    ERC1155,
-    ERC404
-}
 
 /**
  * @title Factory
@@ -25,7 +15,7 @@ contract Factory is Ownable {
     struct DeployedContract {
         address owner;
         address contractAddress;
-        ContractType contractType;
+        string contractType;
         string name;
         string symbol;
     }
@@ -35,7 +25,7 @@ contract Factory is Ownable {
     event ContractDeployed(
         address indexed onwer,
         address contractAddress,
-        ContractType indexed contractType,
+        string contractType,
         string name,
         string symbol
     );
@@ -60,11 +50,11 @@ contract Factory is Ownable {
             DeployedContract({
                 owner: msg.sender,
                 contractAddress: address(newContract),
-                contractType: ContractType.ERC721,
+                contractType: "ERC721",
                 name: _name,
                 symbol: _symbol
             })
         );
-        emit ContractDeployed(msg.sender, address(newContract), ContractType.ERC721, _name, _symbol);
+        emit ContractDeployed(msg.sender, address(newContract), "ERC721", _name, _symbol);
     }
 }
