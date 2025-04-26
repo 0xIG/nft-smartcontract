@@ -14,7 +14,7 @@
     "typechain": "hardhat typechain",
     "prettier": "prettier . --write",
     "prettier:contracts": "prettier --write --plugin=prettier-plugin-solidity 'contracts/**/*.sol'",
-    "deploy:factory:sepolia": "hardhat ignition deploy ignition/modules/deployFactory.ts --network sepolia"
+    "deploy:factory:sepolia": "hardhat run scripts/deploy/deployFactory.ts --network sepolia"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition-ethers": "^0.15.5",
